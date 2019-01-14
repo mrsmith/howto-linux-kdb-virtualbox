@@ -18,7 +18,11 @@ In oreder to turn the pipe into a PTY device you will need socat:
 
 ```
 # the pty device name that socat creates can be found in `./tty` text file
-socat -d -d /tmp/alinux.ttyS0 pty 2>&1 | tee >(grep -o '/dev/tty.*' > ./tty) &
+socat -d -d /tmp/alinux.ttyS0 pty &
+
+# save the PTY device name from socat log into a file for future reference
+# the log message shold look like "PTY is /dev/*"
+echo /dev/ttys000 > ./tty
 
 # the newly created PTY can be tested with minicom
 # make sure to disconnect minicom before attaching GDB
